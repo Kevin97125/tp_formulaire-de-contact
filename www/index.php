@@ -3,6 +3,7 @@ define("IS_DEBUG", $_SERVER["HTTP_HOST"] == "localhost" ? true : false);
 
 $firstname = $lastname = $subject = $email = $message = ""; //initialise la variable a 0
 $firstnameError = $lastnameError = $subjectError = $emailError = $messageError = ""; 
+$noError = true;
 
 //Les variables PHP $_GET et $_POST sont utilisées pour collectées les données postées par les formulaires. $_GET et $_POST sont des tableaux associatifs contenant des paires clé/valeur où les clés sont les noms des contrôles de formulaires (name="...") et les valeurs sont les données d'entrée de l'utilisateur.
 
@@ -13,16 +14,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //$_SERVER : ce sont des valeurs uti
     $firstname = isset($_POST["firstname"]) ? checkInput($_POST["firstname"]) : ""; //La fonction isset() est une fonction intégrée en PHP qui vérifie si une variable est définie, ce qui signifie qu’elle doit être déclarée et non NULL. Cette fonction renvoie TRUE si la variable existe et n’est pas NULL, sinon elle renvoie FALSE.
     if (empty($firtsname)) {
         $firstnameError = "Veuillez renseigner votre Prenom.";
+        $noError = false;
     }
 
     $lastname = isset($_POST["lastname"]) ? checkInput($_POST["lastname"]) : "";
     if (empty($lastname)) {
         $lastnameError = "Veuillez renseigner votre Nom.";
+        $noError = false;
     }
 
     $subject = isset($_POST["subject"]) ? checkInput($_POST["subject"]) : "";
     if (empty($subject)) {
         $subject = "Veuillez renseigner le sujet.";
+        $noError = false;
     }
 
     $email = isset($_POST["email"]) ? checkInput($_POST["email"]) : "";
@@ -33,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //$_SERVER : ce sont des valeurs uti
     $message = isset($_POST["message"]) ? checkInput($_POST["message"]) : "";
     if (empty($message)) {
         $messageError = "Veuillez tapez votre message.";
+        $noError = false;
     }
 } else {
     if (IS_DEBUG) {
